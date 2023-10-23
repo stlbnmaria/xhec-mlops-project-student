@@ -33,7 +33,7 @@ conda env create --file environment.yml
 conda activate <envname>
 ```
 
-Install the following requirements (except if you directly jump to [Running the FastAPI application](##running-the-fastapi-application)):
+Install the following requirements (except if you directly jump to [Running the FastAPI application](#running-the-fastapi-application)):
 ```bash
 pip install -r requirements-dev.txt
 pre-commit install
