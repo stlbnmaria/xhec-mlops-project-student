@@ -39,11 +39,6 @@ pip install -r requirements-dev.txt
 pre-commit install
 ```
 
-If you are planning to only run the app (i.e., `src/web_service`), install the following requirements:
-```bash
-pip install -r requirements.txt
-```
-
 ## Training and saving model with prefect
 Set the API URL for prefect:
 ```bash
