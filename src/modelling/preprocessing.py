@@ -45,6 +45,7 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     # one-hot-encoding sex column
     df["Sex_I"] = np.where(df["Sex"] == "I", 1, 0)
     df["Sex_M"] = np.where(df["Sex"] == "M", 1, 0)
+    df["Sex_F"] = np.where(df["Sex"] == "F", 1, 0)
 
     df = df.drop(axis=1, columns=["Rings", "Sex"])
 
