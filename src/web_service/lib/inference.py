@@ -55,6 +55,7 @@ def preprocessing(df: pd.DataFrame) -> pd.DataFrame:
     """
     df["Sex_I"] = np.where(df["Sex"] == "I", 1, 0)
     df["Sex_M"] = np.where(df["Sex"] == "M", 1, 0)
+    df["Sex_F"] = np.where(df["Sex"] == "F", 1, 0)
     df = df.drop(columns="Sex")
     return df
 
