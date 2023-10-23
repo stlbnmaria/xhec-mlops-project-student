@@ -1,11 +1,12 @@
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from src.web_service.lib.models import ModelInput, ModelOutput
 from src.web_service.utils import load_object
 
-MODEL_PATH = Path(".") / "src" / "web_service" / "local_models" / "model.pkl"
+MODEL_PATH = Path(".") / "src" / "web_service" / "local_objects" / "model.pkl"
 
 
 def get_input_df(payload: ModelInput) -> pd.DataFrame:
@@ -39,6 +40,25 @@ def get_input_df(payload: ModelInput) -> pd.DataFrame:
     return input_df
 
 
+def preprocessing(df: pd.DataFrame) -> pd.DataFrame:
+    """Perform data preprocessing.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Input data to be preprocessed.
+
+    Returns
+    -------
+    df : pd.DataFrame
+        Processed dataframe.
+    """
+    df["Sex_I"] = np.where(df["Sex"] == "I", 1, 0)
+    df["Sex_M"] = np.where(df["Sex"] == "M", 1, 0)
+    df = df.drop(columns="Sex")
+    return df
+
+
 def infer_age(payload: ModelInput) -> ModelOutput:
     """Predict abalone age.
 
@@ -54,7 +74,8 @@ def infer_age(payload: ModelInput) -> ModelOutput:
     """
     model = load_object(MODEL_PATH)
 
-    x = get_input_df(payload)
+    df = get_input_df(payload)
+    x = preprocessing(df)
 
     y_pred = model.predict(x)[0]
     prediction = ModelOutput(abalone_age=y_pred)
