@@ -15,9 +15,9 @@ def main(trainset_path: Path, model_path: Path) -> None:
 
     Parameters
     -------
-    trainset_path : path
+    trainset_path : Path
                     Path of the train data.
-    model_path : path
+    model_path : Path
                   Path to which the model is saved as a pickle.
 
     Returns
