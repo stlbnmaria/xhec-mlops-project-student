@@ -43,3 +43,10 @@ If you are planning to run the code, install the following requirements:
 ```bash
 pip install -r requirements.txt
 ```
+
+## Training and saving  model
+
+In order to build the model run:
+```bash
+python src/modelling/main.py
+```
