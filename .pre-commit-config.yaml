@@ -13,11 +13,6 @@ repos:
       - id: black
         name: Formatting (black)
         entry: black
-        types: [python]
-        language: system
-      - id: black-jupyter
-        name: Formatting (black-jupyter)
-        entry: black-jupyter
         language: python
         types_or: [python, pyi, jupyter]
         additional_dependencies: [".[jupyter]"]
