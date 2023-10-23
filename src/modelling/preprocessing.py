@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Tuple
 
+import numpy as np
 import pandas as pd
 from prefect import task
 from sklearn.model_selection import train_test_split
@@ -42,9 +43,10 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     # add age column
     df["age"] = df["Rings"] + 1.5
     # one-hot-encoding sex column
-    df = pd.get_dummies(df, columns=["Sex"], prefix=["Sex"], drop_first=True)
+    df["Sex_I"] = np.where(df["Sex"] == "I", 1, 0)
+    df["Sex_M"] = np.where(df["Sex"] == "M", 1, 0)
 
-    df = df.drop(axis=1, columns="Rings")
+    df = df.drop(axis=1, columns=["Rings", "Sex"])
 
     return df
 
