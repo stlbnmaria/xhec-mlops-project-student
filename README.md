@@ -66,11 +66,6 @@ If you want to reset the database, run:
 prefect server database reset
 ```
 
-To checkout the mlflow experiments, run:
-```bash
-mlflow ui --host 0.0.0.0 --port 5002
-```
-
 :warning: We assumed that the prefect flows were not supposed be deployed. If this should be achieved, replace the call of the main function in `main.py` with the following code:
 ```python
 from prefect import serve
@@ -84,6 +79,11 @@ main_deploy = main.to_deployment(
     },
 )
 serve(main_deploy)
+```
+
+To checkout the mlflow experiments, run:
+```bash
+mlflow ui --host 0.0.0.0 --port 5002
 ```
 
 ## Running the FastAPI application
