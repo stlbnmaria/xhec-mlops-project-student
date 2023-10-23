@@ -85,3 +85,14 @@ main_deploy = main.to_deployment(
 )
 serve(main_deploy)
 ```
+
+## Running the FastAPI application
+Build the docker image from the Dockerfile:
+```bash
+docker build -t abalone-age-prediction -f Dockerfile .
+```
+Run the docker container from the created image:
+```bash
+docker run -p 8000:8000 abalone-age-prediction
+```
+To get access to the FastAPI dashboard use this url: http://0.0.0.0:8000/docs
