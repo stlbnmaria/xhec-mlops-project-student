@@ -12,7 +12,7 @@ def read_data(path: str) -> pd.DataFrame:
     path : string
            String represents the path to the csv file.
 
-    Returns:
+    Returns
     -------
     df : pd.Dataframe
          Pandas dataframe.
@@ -30,7 +30,7 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     df : pd.Dataframe
          Pandas input dataframe.
 
-    Returns:
+    Returns
     -------
     df : pd.Dataframe
          Transformed dataframe.
@@ -58,7 +58,7 @@ def extract_x_y_split(
     target : str (optional)
              The name of the target column in the DataFrame. Default is "age".
 
-    Returns:
+    Returns
     --------
     X_train : pd.DataFrame
               The training feature set (X).

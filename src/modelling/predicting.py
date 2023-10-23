@@ -16,7 +16,7 @@ def predict_pipeline(input_data: pd.DataFrame, model: xgb.XGBRegressor) -> np.nd
     model : xgb.XGBRegressor
             Model used to predict on the input data.
 
-    Returns:
+    Returns
     -------
     y : np.ndarray
         Array of predicted target values.
