@@ -1,26 +1,24 @@
 import numpy as np
 import pandas as pd
 import xgboost as xgb
-from preprocessing import transform_data
-from training import predict
+from prefect import task
 
 
-def predict_pipeline(input_data: pd.DataFrame, model: xgb.XGBRegressor) -> np.ndarray:
-    """Pipeline to predict on the input data using the given model.
+@task("name=predict", tags=["fails"], retries=3, retry_delay_seconds=60)
+def predict(X_data: pd.DataFrame, model: xgb.XGBRegressor) -> np.ndarray:
+    """Given X_data and an XGBoost model, returns an array with the values predicted by the model.
 
     Parameters
-    -------
-    input_data : pd.Dataframe
-                 Pandas input dataframe.
-
-    model : xgb.XGBRegressor
-            Model used to predict on the input data.
+    ----------
+    X_data: pd.DataFrame
+            Input data given to the model
+    model:  xgb.XGBRegressor
+            Model which will be used to predict the target variable of the input data.
 
     Returns
     -------
-    y : np.ndarray
-        Array of predicted target values.
+    preds: np.ndarray
+           Numpy array containing the predicted values.
     """
-    df = transform_data(input_data)
-    y = predict(df, model)
-    return y
+    preds = model.predict(X_data)
+    return preds

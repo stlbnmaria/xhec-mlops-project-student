@@ -4,6 +4,8 @@ import argparse
 from pathlib import Path
 
 import mlflow
+from predicting import predict
+from prefect import flow, serve
 from preprocessing import extract_x_y_split, read_data, transform_data
 from training import train_model
 from utils import evaluate_model, save_pickle
@@ -11,6 +13,7 @@ from utils import evaluate_model, save_pickle
 from config.config import DATA_PATH, MODEL_PATH
 
 
+@flow(retries=3, retry_delay_seconds=5, log_prints=True)
 def main(trainset_path: Path, model_path: Path) -> None:
     """Train a model using the data at the given path and save the model (pickle).
 
@@ -52,7 +55,7 @@ def main(trainset_path: Path, model_path: Path) -> None:
         mlflow.log_params(model.get_params())
 
         # make prediction on X_test
-        y_pred = model.predict(X_test)
+        y_pred = predict(X_test, model)
 
         # evaluate on y_test
         mse, r2 = evaluate_model(y_test, y_pred)
@@ -78,5 +81,13 @@ if __name__ == "__main__":
         "--model_path", type=Path, help="Path where the pickle model is saved", default=MODEL_PATH
     )
     args = parser.parse_args()
-    print(args.trainset_path)
-    main(trainset_path=args.trainset_path, model_path=args.model_path)
+
+    main_deploy = main.to_deployment(
+        name="train",
+        cron="0 0 1 * *",  # run once a month on the first day at midnight
+        parameters={
+            "trainset_path": args.trainset_path,
+            "model_path": args.model_path,
+        },
+    )
+    serve(main_deploy)

@@ -2,9 +2,11 @@ from pathlib import Path
 from typing import Tuple
 
 import pandas as pd
+from prefect import task
 from sklearn.model_selection import train_test_split
 
 
+@task("name=read-data", tags=["fails"], retries=3, retry_delay_seconds=60)
 def read_data(path: Path) -> pd.DataFrame:
     """Given a path, loads the data as a pandas dataframe.
 
@@ -23,6 +25,7 @@ def read_data(path: Path) -> pd.DataFrame:
     return df
 
 
+@task("name=transform-data", tags=["fails"], retries=3, retry_delay_seconds=60)
 def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     """Given a dataframe, applies transformations and returns the transformed dataframe.
 
@@ -46,6 +49,7 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+@task("name=val-split", tags=["fails"], retries=3, retry_delay_seconds=60)
 def extract_x_y_split(
     df: pd.DataFrame, target: str = "age"
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:

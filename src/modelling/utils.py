@@ -4,9 +4,11 @@ from typing import Tuple
 
 import pandas as pd
 import xgboost as xgb
+from prefect import task
 from sklearn.metrics import mean_squared_error, r2_score
 
 
+@task("name=load-pickle", tags=["fails"], retries=3, retry_delay_seconds=60)
 def load_pickle(path: Path) -> pickle:
     """Given a path, loads the pickle object found in that path.
 
@@ -25,6 +27,7 @@ def load_pickle(path: Path) -> pickle:
     return loaded_obj
 
 
+@task("name=save-pickle", tags=["fails"], retries=3, retry_delay_seconds=60)
 def save_pickle(path: Path, obj: xgb.XGBRegressor) -> None:
     """Given a path and an object, stores the object as a pickle file in the specified path.
 
@@ -44,6 +47,7 @@ def save_pickle(path: Path, obj: xgb.XGBRegressor) -> None:
         pickle.dump(obj, f)
 
 
+@task("name=evaluate-model", tags=["fails"], retries=3, retry_delay_seconds=60)
 def evaluate_model(y_true: pd.Series, y_pred: pd.Series) -> Tuple[float, float]:
     """Evaluate the model by calculating Mean Squared Error (MSE) and R-squared (R2) scores.
 
