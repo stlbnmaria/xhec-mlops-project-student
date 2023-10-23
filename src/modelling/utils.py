@@ -1,15 +1,16 @@
 import pickle
+from pathlib import Path
 
 import xgboost as xgb
 
 
-def load_pickle(path: str) -> pickle:
+def load_pickle(path: Path) -> pickle:
     """Given a path, loads the pickle object found in that path.
 
     Parameters
     ----------
-    path : string
-           String represents the path to the object.
+    path : Path
+           Represents the path to the object.
 
     Returns
     -------
@@ -21,13 +22,13 @@ def load_pickle(path: str) -> pickle:
     return loaded_obj
 
 
-def save_pickle(path: str, obj: xgb.XGBRegressor) -> None:
+def save_pickle(path: Path, obj: xgb.XGBRegressor) -> None:
     """Given a path and an object, stores the object as a pickle file in the specified path.
 
     Parameters
     ----------
-    path : string
-           String represents the path where the pickle object will be stored.
+    path : Path
+           Represents the path where the pickle object will be stored.
 
     obj : LinearRegression
           Represents the linear regression model that will be stored.
