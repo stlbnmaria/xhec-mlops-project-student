@@ -1,9 +1,12 @@
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
-from config.config import MODEL_PATH
 from src.web_service.lib.models import ModelInput, ModelOutput
 from src.web_service.utils import load_object
+
+MODEL_PATH = Path(".") / "src" / "web_service" / "local_objects" / "model.pkl"
 
 
 def get_input_df(payload: ModelInput) -> pd.DataFrame:
