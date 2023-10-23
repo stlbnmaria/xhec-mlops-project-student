@@ -4,7 +4,7 @@ import xgboost as xgb
 from prefect import task
 
 
-@task("name=predict", tags=["fails"], retries=3, retry_delay_seconds=60)
+@task(name="predict", tags=["fails"], retries=3, retry_delay_seconds=60)
 def predict(X_data: pd.DataFrame, model: xgb.XGBRegressor) -> np.ndarray:
     """Given X_data and an XGBoost model, returns an array with the values predicted by the model.
 

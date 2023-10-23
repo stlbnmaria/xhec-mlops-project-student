@@ -13,7 +13,7 @@ from utils import evaluate_model, save_pickle
 from config.config import DATA_PATH, MODEL_PATH
 
 
-@flow(retries=3, retry_delay_seconds=5, log_prints=True)
+@flow(name="training-pipeline", retries=3, retry_delay_seconds=5, log_prints=True)
 def main(trainset_path: Path, model_path: Path) -> None:
     """Train a model using the data at the given path and save the model (pickle).
 

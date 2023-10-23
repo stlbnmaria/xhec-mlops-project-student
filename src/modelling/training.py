@@ -3,7 +3,7 @@ import xgboost as xgb
 from prefect import task
 
 
-@task("name=train-model", tags=["fails"], retries=3, retry_delay_seconds=60)
+@task(name="train-model", tags=["fails"], retries=3, retry_delay_seconds=60)
 def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> xgb.XGBRegressor:
     """Given X_train and y_train, uses XGboost to train a model, returning the trained model.
 
