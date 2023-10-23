@@ -9,9 +9,9 @@ def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> xgb.XGBRegressor:
 
     Parameters
     ----------
-    X_train: pd.Dataframe
+    X_train : pd.Dataframe
              Corresponds to the matrix with all the non target columns of the dataset.
-    y_train: pd.Series
+    y_train : pd.Series
              Corresponds to the target column of the dataset.
 
     Returns

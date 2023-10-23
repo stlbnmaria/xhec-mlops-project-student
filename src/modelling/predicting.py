@@ -10,14 +10,14 @@ def predict(X_data: pd.DataFrame, model: xgb.XGBRegressor) -> np.ndarray:
 
     Parameters
     ----------
-    X_data: pd.DataFrame
+    X_data : pd.DataFrame
             Input data given to the model
-    model:  xgb.XGBRegressor
+    model :  xgb.XGBRegressor
             Model which will be used to predict the target variable of the input data.
 
     Returns
     -------
-    preds: np.ndarray
+    preds : np.ndarray
            Numpy array containing the predicted values.
     """
     preds = model.predict(X_data)
