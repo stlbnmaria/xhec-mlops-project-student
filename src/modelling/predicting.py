@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 import xgboost as xgb
-from preprocessing import extract_x_y_split, transform_data
+from preprocessing import transform_data
+from training import predict
 
 
 def predict_pipeline(input_data: pd.DataFrame, model: xgb.XGBRegressor) -> np.ndarray:
@@ -21,6 +22,5 @@ def predict_pipeline(input_data: pd.DataFrame, model: xgb.XGBRegressor) -> np.nd
         Array of predicted target values.
     """
     df = transform_data(input_data)
-    X_train, X_test, y_train, y_test = extract_x_y_split(df)
-    y = model.predict(X_test)
+    y = predict(df, model)
     return y
