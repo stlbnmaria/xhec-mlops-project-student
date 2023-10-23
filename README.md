@@ -33,13 +33,13 @@ conda env create --file environment.yml
 conda activate <envname>
 ```
 
-If you are planning to develop, install the following requirements:
+Install the following requirements (except if you directly jump to [Running the FastAPI application](##running-the-fastapi-application)):
 ```bash
 pip install -r requirements-dev.txt
 pre-commit install
 ```
 
-## Training and saving model with prefect
+## Training and saving model
 Set the API URL for prefect:
 ```bash
 prefect config set PREFECT_API_URL=http://0.0.0.0:4200/api
@@ -54,16 +54,21 @@ Start a local prefect server:
 prefect server start --host 0.0.0.0
 ```
 
-In order to build the model run:
+In order to build the model, run:
 ```bash
 python src/modelling/main.py
 ```
 
 You can visit the UI at http://0.0.0.0:4200/dashboard and checkout the flow runs.
 
-If you want to reset the database, run :
+If you want to reset the database, run:
 ```bash
 prefect server database reset
+```
+
+To checkout the mlflow experiments, run:
+```bash
+mlflow ui --host 0.0.0.0 --port 5002
 ```
 
 :warning: We assumed that the prefect flows were not supposed be deployed. If this should be achieved, replace the call of the main function in `main.py` with the following code:
