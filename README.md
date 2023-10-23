@@ -23,6 +23,8 @@ The age of abalone is determined by cutting the shell through the cone, staining
 
 You can download the dataset on the [Kaggle page](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset).
 
+Note that we add a column "age" to the dataset which corresponds to the number of rings plus 1.5 and predict this age as detailed in the kaggle link above.
+
 ## Setup
 
 Use a virtual environment to install the dependencies of the project:
