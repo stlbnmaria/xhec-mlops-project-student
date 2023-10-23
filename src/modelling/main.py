@@ -7,15 +7,17 @@ from preprocessing import extract_x_y_split, read_data, transform_data
 from training import train_model
 from utils import save_pickle
 
+from config.config import DATA_PATH, MODEL_PATH
 
-def main(trainset_path: Path, output_path: Path) -> None:
+
+def main(trainset_path: Path, model_path: Path) -> None:
     """Train a model using the data at the given path and save the model (pickle).
 
     Parameters
     -------
     trainset_path : path
                     Path of the train data.
-    output_path : path
+    model_path : path
                   Path to which the model is saved as a pickle.
 
     Returns
@@ -24,19 +26,26 @@ def main(trainset_path: Path, output_path: Path) -> None:
     """
     # Read data
     data = read_data(trainset_path)
+
     # Preprocess data
     trans_data = transform_data(data)
-    X_train, X_test, y_train, y_test = extract_x_y_split(trans_data)
+    X_train, _, y_train, _ = extract_x_y_split(trans_data)
+
     # Train model
     model = train_model(X_train, y_train)
-    # Pickle model --> The model should be saved in pkl format the
-    # `src/web_service/local_objects` folder
-    save_pickle(output_path, model)
+
+    # Pickle model
+    save_pickle(model_path, model)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a model using the data at the given path.")
-    parser.add_argument("trainset_path", type=str, help="Path to the training set")
-    parser.add_argument("output_path", type=str, help="Path where the pickle model is saved")
+    parser.add_argument(
+        "--trainset_path", type=Path, help="Path to the training set", default=DATA_PATH
+    )
+    parser.add_argument(
+        "--model_path", type=Path, help="Path where the pickle model is saved", default=MODEL_PATH
+    )
     args = parser.parse_args()
-    main(args.trainset_path)
+    print(args.trainset_path)
+    main(trainset_path=args.trainset_path, model_path=args.model_path)
