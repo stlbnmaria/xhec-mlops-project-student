@@ -3,9 +3,10 @@
 import argparse
 from pathlib import Path
 
+import mlflow
 from preprocessing import extract_x_y_split, read_data, transform_data
 from training import train_model
-from utils import save_pickle
+from utils import evaluate_model, save_pickle
 
 from config.config import DATA_PATH, MODEL_PATH
 
@@ -24,15 +25,45 @@ def main(trainset_path: Path, model_path: Path) -> None:
     -------
     None : None
     """
-    # Read data
-    data = read_data(trainset_path)
+    # validate that mlflow runs locally
+    print(f"tracking URI: '{mlflow.get_tracking_uri()}'")
 
-    # Preprocess data
-    trans_data = transform_data(data)
-    X_train, _, y_train, _ = extract_x_y_split(trans_data)
+    # set experiment
+    mlflow.set_experiment("xgb")
 
-    # Train model
-    model = train_model(X_train, y_train)
+    with mlflow.start_run() as run:
+        # get unique identifier of MLflow run
+        run_id = run.info.run_id
+
+        # set tags
+        mlflow.set_tag("Task_type", "Regression")
+
+        # Read data
+        data = read_data(trainset_path)
+
+        # Preprocess data
+        trans_data = transform_data(data)
+        X_train, X_test, y_train, y_test = extract_x_y_split(trans_data)
+        mlflow.log_param("X_train_size", X_train.shape[0])
+        mlflow.log_param("X_test_size", X_test.shape[0])
+
+        # train model
+        model = train_model(X_train, y_train)
+        mlflow.log_params(model.get_params())
+
+        # make prediction on X_test
+        y_pred = model.predict(X_test)
+
+        # evaluate on y_test
+        mse, r2 = evaluate_model(y_test, y_pred)
+        mlflow.log_metric("test_rmse", mse)
+        mlflow.log_metric("test_r2", r2)
+
+        # Log your model
+        mlflow.xgboost.log_model(model, "model")
+
+        # Register your model
+        mlflow.register_model(f"runs:/{run_id}/model", "xgb_regressor")
 
     # Pickle model
     save_pickle(model_path, model)
