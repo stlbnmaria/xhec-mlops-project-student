@@ -44,7 +44,7 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     # one-hot-encoding sex column
     df = pd.get_dummies(df, columns=["Sex"], prefix=["Sex"], drop_first=True)
 
-    df.drop(axis=1, columns="Rings")
+    df = df.drop(axis=1, columns="Rings")
 
     return df
 
