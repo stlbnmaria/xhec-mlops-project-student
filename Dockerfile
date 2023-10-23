@@ -2,13 +2,15 @@
 FROM python:3.10-slim
 
 # Expose necessary ports.
-EXPOSE 8000  # Uvicorn [REST-API]
+# Uvicorn [REST-API]
+EXPOSE 8000
 
 # Set the working directory.
 WORKDIR /app
 
 # Copy necessary files from the host.
-COPY ./src/ ./
+COPY ./src ./src
+COPY ./requirements.txt ./requirements.txt
 
 # Install application dependencies.
 RUN pip install -r requirements.txt
