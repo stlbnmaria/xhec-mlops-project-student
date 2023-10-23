@@ -1,5 +1,7 @@
 # CUSTOM
 data/
+mlruns/
+.DS_Store
 
 
 # Byte-compiled / optimized / DLL files
