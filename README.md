@@ -44,9 +44,44 @@ If you are planning to run the code, install the following requirements:
 pip install -r requirements.txt
 ```
 
-## Training and saving  model
+## Training and saving model with prefect
+Set the API URL for prefect:
+```bash
+prefect config set PREFECT_API_URL=http://0.0.0.0:4200/api
+```
+Check that you have SQLite installed ([Prefect backend database system](https://docs.prefect.io/2.13.7/getting-started/installation/#external-requirements)):
+```bash
+sqlite3 --version
+```
+
+Start a local prefect server:
+```bash
+prefect server start --host 0.0.0.0
+```
 
 In order to build the model run:
 ```bash
 python src/modelling/main.py
+```
+
+You can visit the UI at http://0.0.0.0:4200/dashboard and checkout the flow runs.
+
+If you want to reset the database, run :
+```bash
+prefect server database reset
+```
+
+:warning: We assumed that the prefect flows were not supposed be deployed. If this should be achieved, replace the call of the main function in `main.py` with the following code:
+```python
+from prefect import serve
+
+main_deploy = main.to_deployment(
+    name="train",
+    cron="0 0 1 * *",  # run once a month on the first day at midnight
+    parameters={
+        "trainset_path": args.trainset_path,
+        "model_path": args.model_path,
+    },
+)
+serve(main_deploy)
 ```
