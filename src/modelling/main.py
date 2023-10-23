@@ -5,7 +5,7 @@ from pathlib import Path
 
 import mlflow
 from predicting import predict
-from prefect import flow, serve
+from prefect import flow
 from preprocessing import extract_x_y_split, read_data, transform_data
 from training import train_model
 from utils import evaluate_model, save_pickle
@@ -82,12 +82,4 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    main_deploy = main.to_deployment(
-        name="train",
-        cron="0 0 1 * *",  # run once a month on the first day at midnight
-        parameters={
-            "trainset_path": args.trainset_path,
-            "model_path": args.model_path,
-        },
-    )
-    serve(main_deploy)
+    main(args.trainset_path, args.model_path)
