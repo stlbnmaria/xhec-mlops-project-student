@@ -11,6 +11,7 @@ WORKDIR /app
 # Copy necessary files from the host.
 COPY ./src ./src
 COPY ./requirements.txt ./requirements.txt
+COPY ./config ./config
 
 # Install application dependencies.
 RUN pip install -r requirements.txt
