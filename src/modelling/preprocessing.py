@@ -1,16 +1,17 @@
+from pathlib import Path
 from typing import Tuple
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-def read_data(path: str) -> pd.DataFrame:
+def read_data(path: Path) -> pd.DataFrame:
     """Given a path, loads the data as a pandas dataframe.
 
     Parameters
     ----------
-    path : string
-           String represents the path to the csv file.
+    path : Path
+           Represents the path to the csv file.
 
     Returns
     -------
