@@ -15,6 +15,11 @@ repos:
         entry: black
         types: [python]
         language: system
+      - id: black-jupyter
+        name: Formatting (black-jupyter)
+        entry: black-jupyter
+        types: [python]
+        language: system
       - id: isort
         name: Sorting imports (isort)
         entry: isort
