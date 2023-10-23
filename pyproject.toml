@@ -40,6 +40,7 @@ ignore = [
   "D106",
   "D203",
   "D213",
+  "D416",
   "ANN101",
   "ANN102",
   "N803",
@@ -75,7 +76,7 @@ convention = "google"
 [tool.black]
 line-length = 100
 target-version = ["py310"]
-include = '\.pyi?$'
+include = '\.pyi?$|\.ipynb'
 exclude = '''
 (
   /(
