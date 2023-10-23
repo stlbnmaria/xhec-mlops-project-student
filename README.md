@@ -31,11 +31,6 @@ conda env create --file environment.yml
 conda activate <envname>
 ```
 
-Generate the `requirements.txt` from the `requirements.in`:
-```bash
-pip-compile requirements.in
-```
-
 If you are planning to develop, install the following requirements:
 ```bash
 pip install -r requirements-dev.txt
