@@ -25,10 +25,15 @@ You can download the dataset on the [Kaggle page](https://www.kaggle.com/dataset
 
 ## Setup
 
-Use a virtual environment to install the dependencies of the project
+Use a virtual environment to install the dependencies of the project:
 ```bash
 conda env create --file environment.yml
 conda activate <envname>
+```
+
+Generate the `requirements.txt` from the `requirements.in`:
+```bash
+pip-compile requirements.in
 ```
 
 If you are planning to develop, install the following requirements:
