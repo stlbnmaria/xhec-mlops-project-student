@@ -16,7 +16,7 @@ def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> xgb.XGBRegressor:
     y_train: pd.Series
              Corresponds to the target column of the dataset.
 
-    Returns:
+    Returns
     -------
     model : xgb.XGBRregressor
             Trained XGboost model.
@@ -38,7 +38,7 @@ def predict(X_data: pd.DataFrame, model: xgb.XGBRegressor) -> np.ndarray:
     model:  xgb.XGBRegressor
             Model which will be used to predict the target variable of the input data.
 
-    Returns:
+    Returns
     -------
     preds: np.ndarray
            Numpy array containing the predicted values.
@@ -57,7 +57,7 @@ def evaluate_model(y_true: pd.Series, y_pred: pd.Series) -> Tuple[float, float]:
         y_pred : pd.Series
                  The predicted target values.
 
-    Returns:
+    Returns
     --------
         mse : float
               The Mean Squared Error (RMSE) between the true and predicted values.
